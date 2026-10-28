@@ -1,6 +1,9 @@
-# HOGWARTS AFTER DARK
-## Hacktoberfest 2026 Open-Source AI Challenge: Week 4 Submission
-
+---
+title: Hogwarts After Dark: An Arcane Investigation Engine Powered by Local Open-Weight AI
+published: true
+tags: hf26challenge, ai, opensource, webdev
+cover_image: https://raw.githubusercontent.com/username/hogwarts-after-dark/master/apps/web/public/cover.jpg
+description: A Victorian Gothic investigation game where an open-weight AI model acts as the ghost possessing suspects within a deterministic game engine.
 ---
 
 *This is a submission for the [Hacktoberfest Open-Source AI Challenge Week 4: Ghost in the Machine](https://dev.to/challenges/hacktoberfest-week4-2026-10-26)*
