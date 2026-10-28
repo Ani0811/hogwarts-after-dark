@@ -2,13 +2,10 @@
 title: Hogwarts After Dark: An Arcane Investigation Engine Powered by Local Open-Weight AI
 published: true
 tags: hf26challenge, ai, opensource, webdev
-cover_image: https://raw.githubusercontent.com/username/hogwarts-after-dark/master/apps/web/public/cover.jpg
 description: A Victorian Gothic investigation game where an open-weight AI model acts as the ghost possessing suspects within a deterministic game engine.
 ---
 
 *This is a submission for the [Hacktoberfest Open-Source AI Challenge Week 4: Ghost in the Machine](https://dev.to/challenges/hacktoberfest-week4-2026-10-26)*
-
-![Hogwarts After Dark Hero Banner](https://raw.githubusercontent.com/username/hogwarts-after-dark/master/apps/web/public/cover.jpg)
 
 ---
 
@@ -76,8 +73,6 @@ For this challenge, I wanted to move beyond the shallow cliché of a chatbot wra
 
 ## Demo
 
-![Forensic Lens Workbench](https://raw.githubusercontent.com/username/hogwarts-after-dark/master/apps/web/public/forensic_lens.jpg)
-
 ### Experience It Live
 
 You can run **Hogwarts After Dark** in two distinct modes:
@@ -111,8 +106,6 @@ To experience the open-weight LLM dynamically roleplaying suspects:
    python -m uvicorn app.main:app --host 127.0.0.1 --port 8765
    ```
 5. Click **"Local AI Engine"** in the game header: the status pill turns glowing emerald (`AI: Online`), indicating full local AI integration!
-
-![Suspect Interrogation Scene](https://raw.githubusercontent.com/username/hogwarts-after-dark/master/apps/web/public/interrogation.jpg)
 
 ---
 
