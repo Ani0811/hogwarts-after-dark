@@ -1,0 +1,19 @@
+[
+  {
+    "id": "case_001",
+    "title": "The Vanishing Hourglass",
+    "description": "An enchanted timepiece has vanished from the Archivist's study under impossible circumstances.",
+    "introduction": "The Academy of Veiled Arts has stood for four centuries, its stones soaked in generations of magic. Tonight, something old and dangerous has gone missing.\n\nThe Archivist's Hourglass — an artifact said to slow time within a small radius — disappeared sometime between the evening bell and midnight. Three people were in or near the Archivist's study during that window. The Archivist himself was found unconscious at his desk, a faint smell of Dreamroot tea lingering in the air.\n\nYou are the Academy's Investigator. The Headmistress has given you one night.\n\nFind the Hourglass. Find out why it was taken.",
+    "suspect_ids": ["suspect_maris", "suspect_corvin", "suspect_faelind"],
+    "location_ids": ["loc_entrance_hall", "loc_archivist_study", "loc_east_corridor", "loc_herbarium", "loc_bell_tower"],
+    "clue_ids": ["clue_teacup", "clue_broken_lock", "clue_muddy_boots", "clue_torn_page", "clue_empty_vial", "clue_hourglass_pedestal", "clue_candle_residue"],
+    "spell_ids": ["spell_revelio", "spell_lumos", "spell_specialis", "spell_legilimens_trace"],
+    "solution": {
+      "culprit_id": "suspect_corvin",
+      "required_evidence_ids": ["clue_teacup", "clue_empty_vial", "clue_torn_page"],
+      "explanation": "Corvin Ashwick, the senior apprentice, drugged the Archivist's tea with powdered Dreamroot (clue_empty_vial). He needed the Hourglass to reverse a failed alchemical experiment that destroyed his year's thesis work. The torn page (clue_torn_page) is from a restricted text on Temporal Artifacts — Corvin checked it out two days ago and the relevant page is missing. The teacup (clue_teacup) has trace Dreamroot residue detectable by Specialis Revelio.",
+      "acceptable_culprit_ids": []
+    }
+  }
+]
+

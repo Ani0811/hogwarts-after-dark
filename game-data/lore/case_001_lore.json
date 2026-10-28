@@ -1,0 +1,26 @@
+[
+  {
+    "id": "lore_dreamroot",
+    "title": "On the Properties of Dreamroot",
+    "content": "Dreamroot (Radix Somnifera Arcana) is a pale root harvested primarily in damp woodland valleys. When dried and ground into a fine luminescent dust, it produces profound, dreamless slumber within minutes of ingestion. Often used by healers in small doses to alleviate catastrophic magical trauma. Higher concentrations leave a slightly bitter almond scent and a chalky luminescent trace only visible through the Specialis Revelio charm.",
+    "category": "Herbology & Potions",
+    "tags": ["dreamroot", "poison", "potions", "herbology", "sleep"],
+    "case_relevant": true
+  },
+  {
+    "id": "lore_temporal_hourglass",
+    "title": "The Veiled Hourglass of Ouroboros",
+    "content": "Crafted in the 17th century by Chronomancer Vane, this rare enchanted vessel holds sand gathered from the Temporal Rifts of the northern coast. When inverted in the presence of localized enchantment, it can temporarily rewind physical matter within a radius of three paces. It was gifted to the Academy Archives under an unbreakable vow of preservation.",
+    "category": "Artifacts & Chronomancy",
+    "tags": ["hourglass", "temporal", "artifact", "chronomancy", "ouroboros"],
+    "case_relevant": true
+  },
+  {
+    "id": "lore_steadfast_wax",
+    "title": "Alchemical Sealants and Steadfast Wax",
+    "content": "Steadfast Wax is an alchemical compound prepared from basilisk tallow and mountain sage. Dyed a distinctive dark green, it hardens instantaneously when cold and insulates fragile magical objects from kinetic and astral shock during transit. It leaves a waxy sheen that fluoresces beneath focused wandlight.",
+    "category": "Alchemical Crafts",
+    "tags": ["wax", "alchemy", "transport", "sealant"],
+    "case_relevant": true
+  }
+]

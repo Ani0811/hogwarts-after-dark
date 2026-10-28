@@ -1,0 +1,91 @@
+[
+  {
+    "id": "suspect_maris",
+    "name": "Maris Thornwell",
+    "role": "Academy Librarian",
+    "personality": "Methodical, protective of the archive's integrity, prone to anxiety when routines are disrupted. She is not lying, but she is withholding something she considers irrelevant.",
+    "dialogue_style": "Precise, measured sentences. Uses library terminology. Occasionally corrects the investigator's phrasing.",
+    "appearance": "A tall woman in her fifties with silver-streaked black hair and ink-stained fingers. She carries a leather notebook at all times.",
+    "is_suspect": true,
+    "knowledge": {
+      "public_facts": [
+        "She was in the East Corridor at approximately ten o'clock, returning a trolley of books.",
+        "She noticed the light was still on in the Archivist's study when she passed.",
+        "She did not enter the study that evening.",
+        "She knows the Hourglass is kept on a pedestal by the north window."
+      ],
+      "private_facts": [
+        "She saw Corvin Ashwick in the East Corridor at approximately ten past ten, but she did not think it was suspicious at the time — apprentices sometimes work late.",
+        "She knows Corvin's thesis project was in serious trouble. She heard him arguing with the Archivist two days ago."
+      ],
+      "known_clue_ids": ["clue_muddy_boots"],
+      "reveals_under": ["after_corvin_implicated"]
+    },
+    "relationships": {
+      "suspect_corvin": "His supervisor for the library cataloguing project. She thinks well of him, perhaps too much so.",
+      "suspect_faelind": "Does not trust Faelind's interest in restricted texts."
+    },
+    "location_id": "loc_east_corridor",
+    "portrait_description": "A careful, intelligent face, slightly drawn with worry tonight."
+  },
+  {
+    "id": "suspect_corvin",
+    "name": "Corvin Ashwick",
+    "role": "Senior Apprentice (Year 4)",
+    "personality": "Ambitious, articulate, visibly anxious tonight. He is the culprit. He is not confessing, but he is also not a practiced liar — he contradicts himself if pressed carefully.",
+    "dialogue_style": "Speaks quickly, tends to over-explain. Becomes defensive when his thesis is mentioned.",
+    "appearance": "A young man of about twenty, dark circles under his eyes, robes slightly dishevelled. There is a faint smell of something medicinal about him.",
+    "is_suspect": true,
+    "knowledge": {
+      "public_facts": [
+        "He was in the herbarium working on his thesis until late.",
+        "He has been studying temporal displacement phenomena.",
+        "His thesis is due at the end of the month."
+      ],
+      "private_facts": [
+        "He drugged the Archivist's tea with Dreamroot powder.",
+        "He took the Hourglass to attempt to reverse a failed experiment that destroyed a month of his thesis work.",
+        "He has hidden the Hourglass in the bell tower, inside the old observation box.",
+        "He tore a page from a restricted book about Temporal Artifacts two days ago.",
+        "He obtained the Dreamroot from a vial he bought in the village, and he discarded the empty vial in the herbarium waste bin."
+      ],
+      "known_clue_ids": ["clue_torn_page", "clue_empty_vial"],
+      "reveals_under": []
+    },
+    "relationships": {
+      "suspect_maris": "His library supervisor. He respects her and feels guilty about what he has done.",
+      "suspect_faelind": "Friendly acquaintances. He knows Faelind wanted the Hourglass for a different reason."
+    },
+    "location_id": "loc_herbarium",
+    "portrait_description": "Bright eyes that won't quite meet yours tonight."
+  },
+  {
+    "id": "suspect_faelind",
+    "name": "Faelind Grewe",
+    "role": "Academy Healer's Assistant",
+    "personality": "Warm, perceptive, genuinely concerned about the Archivist's wellbeing. She has her own reasons for wanting the Hourglass but did not take it.",
+    "dialogue_style": "Speaks thoughtfully, often pauses to consider. Uses healer's terminology when describing the Archivist's condition.",
+    "appearance": "A young woman with close-cropped red hair and healer's green robes. She smells of medicinal herbs.",
+    "is_suspect": true,
+    "knowledge": {
+      "public_facts": [
+        "She was in the infirmary most of the evening tending to a student with a mild hexing injury.",
+        "She went to check on the Archivist around eleven when he missed his nightly rounds — she found him unconscious.",
+        "She recognizes the smell of Dreamroot in the Archivist's study."
+      ],
+      "private_facts": [
+        "She had planned to ask the Archivist for temporary use of the Hourglass to slow the progression of a particularly difficult hex — she did not steal it.",
+        "She suspects Dreamroot was used but has not reported this officially yet, waiting to see how the investigation unfolds."
+      ],
+      "known_clue_ids": ["clue_teacup", "clue_hourglass_pedestal"],
+      "reveals_under": []
+    },
+    "relationships": {
+      "suspect_maris": "Cordial professional relationship.",
+      "suspect_corvin": "Knows him socially. Noticed he seemed stressed recently."
+    },
+    "location_id": "loc_archivist_study",
+    "portrait_description": "A healer's composure masking genuine distress."
+  }
+]
+

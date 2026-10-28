@@ -1,0 +1,17 @@
+__pycache__
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv
+venv
+env
+.pytest_cache
+.ruff_cache
+.coverage
+*.log
+.git
+.env
+.env.*
+saves/*.sqlite
+saves/*.db

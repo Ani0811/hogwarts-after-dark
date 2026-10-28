@@ -1,0 +1,66 @@
+[
+  {
+    "id": "clue_teacup",
+    "title": "The Archivist's Teacup",
+    "description": "A fine porcelain teacup on the Archivist's desk, still half-full of cold tea. The residue at the bottom has an unusual texture — slightly gritty and faintly luminescent under Specialis Revelio. A skilled investigator would recognize this as Dreamroot powder, a mild soporific used in sleep potions. Someone drugged the Archivist's tea.",
+    "location_id": "loc_archivist_study",
+    "requires_spell": "spell_specialis",
+    "tags": ["poisoning", "dreamroot", "archivist", "tea"],
+    "is_misleading": false
+  },
+  {
+    "id": "clue_hourglass_pedestal",
+    "title": "The Empty Pedestal",
+    "description": "An ornate stone pedestal by the north window. The top surface shows the clear imprint of a circular base where an object sat for many years — dust has accumulated everywhere except in that circle. The Hourglass was recently removed with some care; there are no signs of violent disturbance.",
+    "location_id": "loc_archivist_study",
+    "requires_spell": null,
+    "tags": ["hourglass", "theft", "pedestal"],
+    "is_misleading": false
+  },
+  {
+    "id": "clue_candle_residue",
+    "title": "Unusual Candle Residue",
+    "description": "A pattern of melted wax on the floor near the pedestal, as though a second candle was placed there — the Archivist uses wall sconces, not floor candles. The wax is a dark green colour. This is Steadfast Wax, used to secure objects during magical transfer. Someone came prepared to move the Hourglass carefully.",
+    "location_id": "loc_archivist_study",
+    "requires_spell": "spell_lumos",
+    "tags": ["wax", "preparation", "magic", "transfer"],
+    "is_misleading": false
+  },
+  {
+    "id": "clue_broken_lock",
+    "title": "Forced Cabinet Lock",
+    "description": "A display cabinet in the East Corridor has a broken lock — the clasp was forced. Inside, the cabinet is empty. According to the Academy's inventory, this cabinet stored a copy of 'On the Temporal Properties of Enchanted Objects.' The book is missing. The break is recent: the wood splinters are fresh and there is no dust on the broken metal.",
+    "location_id": "loc_east_corridor",
+    "requires_spell": null,
+    "tags": ["book", "temporal", "theft", "library"],
+    "is_misleading": false
+  },
+  {
+    "id": "clue_muddy_boots",
+    "title": "Muddy Boot Prints",
+    "description": "A trail of fresh mud on the East Corridor floor, leading from the direction of the herbarium toward the bell tower stair. The prints suggest someone moving with purpose. The herbarium is the only part of the school with damp soil at this hour — the rest of the grounds are dry.",
+    "location_id": "loc_east_corridor",
+    "requires_spell": null,
+    "tags": ["herbarium", "movement", "bell_tower", "trail"],
+    "is_misleading": false
+  },
+  {
+    "id": "clue_empty_vial",
+    "title": "Empty Apothecary Vial",
+    "description": "A small glass vial, recently emptied, found in the waste bin near Corvin Ashwick's workbench in the herbarium. The stopper is still attached. A faint residue inside smells sharply medicinal. The label has been torn off, but faint lettering remains embossed on the glass: 'PATEL & SONS — DRIED DREAMROOT POWDER.' This is a commercial apothecary preparation, sold in village shops.",
+    "location_id": "loc_herbarium",
+    "requires_spell": null,
+    "tags": ["dreamroot", "vial", "corvin", "poison", "herbarium"],
+    "is_misleading": false
+  },
+  {
+    "id": "clue_torn_page",
+    "title": "Torn Page",
+    "description": "A single torn page found under Corvin Ashwick's workbench. It is from a restricted text — the header reads 'Chapter 9: Temporal Displacement and Artifact Interface.' The content describes how a sufficiently powerful Temporal Artifact can be made to reverse localized magical events if calibrated correctly. Corvin's name appears in the library's checkout ledger for this exact volume, two days ago.",
+    "location_id": "loc_herbarium",
+    "requires_spell": null,
+    "tags": ["temporal", "artifact", "corvin", "library", "research"],
+    "is_misleading": false
+  }
+]
+

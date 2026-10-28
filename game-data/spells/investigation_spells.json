@@ -1,0 +1,47 @@
+[
+  {
+    "id": "spell_revelio",
+    "name": "Revelio",
+    "incantation": "Revelio",
+    "description": "A basic revelation charm. Reveals concealed objects and passages. Standard investigative spell taught in Year 2.",
+    "category": "revelation",
+    "effect": "Hidden objects in the immediate area become visible for a short duration.",
+    "target_type": "location",
+    "reveals_clues": true,
+    "cost": 2
+  },
+  {
+    "id": "spell_lumos",
+    "name": "Lumos Maxima",
+    "incantation": "Lumos Maxima",
+    "description": "An enhanced illumination charm. Floods a dark area with bright magical light, revealing details invisible in ordinary candlelight.",
+    "category": "illumination",
+    "effect": "The area is brightly illuminated. Details become visible that were hidden in shadow.",
+    "target_type": "location",
+    "reveals_clues": true,
+    "cost": 1
+  },
+  {
+    "id": "spell_specialis",
+    "name": "Specialis Revelio",
+    "incantation": "Specialis Revelio",
+    "description": "A specialized examination charm. Reveals magical properties, composition, and traces of spells affecting an object.",
+    "category": "examination",
+    "effect": "The object's magical composition becomes apparent. Traces of potions or enchantments are revealed.",
+    "target_type": "clue",
+    "reveals_clues": false,
+    "cost": 3
+  },
+  {
+    "id": "spell_legilimens_trace",
+    "name": "Memoria Vestigium",
+    "incantation": "Memoria Vestigium",
+    "description": "An advanced trace spell. Reads the recent magical memory of an object or surface — not full legilimency, but a directional impression of who handled it and when. Requires focused concentration.",
+    "category": "detection",
+    "effect": "A brief impression of recent activity at this location or object surfaces in your mind — shapes, movement, emotional residue.",
+    "target_type": "clue",
+    "reveals_clues": false,
+    "cost": 5
+  }
+]
+

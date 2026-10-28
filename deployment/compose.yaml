@@ -1,0 +1,51 @@
+# Podman Compose / Docker Compose definition for Hogwarts After Dark
+# Designed for local development on Windows with Podman Desktop
+
+services:
+  companion:
+    build:
+      context: ../services/companion
+      dockerfile: Dockerfile
+    container_name: had-companion
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8765:8765"
+    environment:
+      - COMPANION_HOST=0.0.0.0
+      - COMPANION_PORT=8765
+      - COMPANION_ALLOWED_ORIGINS=http://localhost:5173,http://127.0.0.1:5173,http://localhost:8080,http://127.0.0.1:8080
+      - AI_PROVIDER_BASE_URL=http://host.containers.internal:1234/v1
+      - GAME_DATA_PATH=/app/game-data
+      - LOG_LEVEL=INFO
+    volumes:
+      - ../game-data:/app/game-data:ro
+      - had-saves:/app/saves:rw
+    extra_hosts:
+      - "host.containers.internal:host-gateway"
+      - "host.docker.internal:host-gateway"
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
+
+  web:
+    build:
+      context: ../apps/web
+      dockerfile: Dockerfile
+    container_name: had-web
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8080:80"
+    depends_on:
+      companion:
+        condition: service_healthy
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+
+volumes:
+  had-saves:
+    name: had-saves

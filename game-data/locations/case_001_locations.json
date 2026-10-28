@@ -1,0 +1,63 @@
+[
+  {
+    "id": "loc_entrance_hall",
+    "name": "Entrance Hall",
+    "description": "The great vaulted entrance to the Academy of Veiled Arts. Stone flagstones worn smooth by centuries of footsteps. Portraits of former Headmasters watch from the walls with varying degrees of interest.",
+    "atmosphere": "Cold and echoing at this hour. A single torch burns near the main doors. Shadows pool in the archways leading deeper into the school.",
+    "state": "accessible",
+    "connected_locations": ["loc_archivist_study", "loc_east_corridor"],
+    "available_clue_ids": [],
+    "character_ids": [],
+    "access_restriction": null,
+    "requires_spell": null
+  },
+  {
+    "id": "loc_archivist_study",
+    "name": "Archivist's Study",
+    "description": "A room lined floor to ceiling with shelves of catalogued texts, specimens in jars, and the accumulated oddities of forty years of scholarship. The Archivist himself lies unconscious in his chair, breathing steadily. A teacup sits on the desk. The north window has a pedestal — conspicuously empty.",
+    "atmosphere": "The smell of old paper, candle wax, and something else — faint, slightly sweet. The Archivist's breathing is slow and even.",
+    "state": "accessible",
+    "connected_locations": ["loc_entrance_hall", "loc_east_corridor"],
+    "available_clue_ids": ["clue_teacup", "clue_hourglass_pedestal", "clue_candle_residue"],
+    "character_ids": ["suspect_faelind"],
+    "access_restriction": null,
+    "requires_spell": null
+  },
+  {
+    "id": "loc_east_corridor",
+    "name": "East Corridor",
+    "description": "A long corridor connecting the main hall to the eastern wings. Lined with display cases of student achievements. At this hour it is dark except for the moonlight falling through tall windows.",
+    "atmosphere": "Quiet. One of the display cases has been recently moved — you can see the marks on the dusty floor.",
+    "state": "accessible",
+    "connected_locations": ["loc_entrance_hall", "loc_archivist_study", "loc_herbarium", "loc_bell_tower"],
+    "available_clue_ids": ["clue_muddy_boots", "clue_broken_lock"],
+    "character_ids": ["suspect_maris"],
+    "access_restriction": null,
+    "requires_spell": null
+  },
+  {
+    "id": "loc_herbarium",
+    "name": "The Herbarium",
+    "description": "A glass-roofed room filled with magical plants at various stages of growth. Workbenches run down the center, covered in distillation equipment, drying herbs, and the detritus of ongoing research projects. Corvin Ashwick's workspace is notably disordered.",
+    "atmosphere": "Warm and humid even at night. The air smells of earth, growing things, and — faintly — something medicinal and sharp.",
+    "state": "accessible",
+    "connected_locations": ["loc_east_corridor"],
+    "available_clue_ids": ["clue_empty_vial", "clue_torn_page"],
+    "character_ids": ["suspect_corvin"],
+    "access_restriction": null,
+    "requires_spell": null
+  },
+  {
+    "id": "loc_bell_tower",
+    "name": "Bell Tower",
+    "description": "The Academy's original bell tower, no longer in regular use. Accessed by a narrow stair from the east corridor. At the top, an old observation box sits beside the great bell — undisturbed for years, until recently.",
+    "atmosphere": "Windy and exposed at the top. The observation box has been opened recently — the clasp is undone and there is a faint luminescent residue on the latch.",
+    "state": "accessible",
+    "connected_locations": ["loc_east_corridor"],
+    "available_clue_ids": [],
+    "character_ids": [],
+    "access_restriction": null,
+    "requires_spell": null
+  }
+]
+
