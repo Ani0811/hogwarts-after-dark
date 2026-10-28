@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { CompanionStatus } from '../types/game'
+import { soundscape } from '../services/soundscape'
 
 interface HeaderProps {
   currentTab: string
@@ -18,6 +19,17 @@ export const Header: React.FC<HeaderProps> = ({
   companionStatus,
   onRefreshCompanion
 }) => {
+  const [isMuted, setIsMuted] = useState<boolean>(soundscape.getIsMuted())
+
+  const handleToggleSound = () => {
+    const muted = soundscape.toggleMute()
+    setIsMuted(muted)
+  }
+
+  const handleTabClick = (tabId: string) => {
+    soundscape.playParchment()
+    setTab(tabId)
+  }
   return (
     <header style={{
       background: 'linear-gradient(180deg, #0d0f1c 0%, #080912 100%)',
@@ -100,7 +112,7 @@ export const Header: React.FC<HeaderProps> = ({
             return (
               <button
                 key={tab.id}
-                onClick={() => setTab(tab.id)}
+                onClick={() => handleTabClick(tab.id)}
                 className={`nav-pill ${active ? 'nav-pill--active' : ''}`}
                 style={{ fontSize: '0.78rem' }}
               >
@@ -126,6 +138,29 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Right Status Cluster */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+          {/* Procedural Soundscape Toggle */}
+          <button
+            onClick={handleToggleSound}
+            title={isMuted ? 'Sound Muted. Click to activate procedural spell audio & castle drone.' : 'Sound Active. Click to mute.'}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.35rem',
+              background: isMuted ? 'rgba(255,255,255,0.05)' : 'rgba(212, 175, 55, 0.15)',
+              border: `1px solid ${isMuted ? 'rgba(255,255,255,0.1)' : 'var(--gold-border)'}`,
+              padding: '0.35rem 0.65rem',
+              borderRadius: '20px',
+              cursor: 'pointer',
+              color: isMuted ? 'var(--text-muted)' : 'var(--gold-pure)',
+              fontSize: '0.78rem',
+              fontWeight: 600,
+              transition: 'all 0.2s ease'
+            }}
+          >
+            <span>{isMuted ? '🔇' : '🔊'}</span>
+            <span>{isMuted ? 'Muted' : 'Audio'}</span>
+          </button>
+
           {/* Mana Orb Gauge */}
           <div
             title={`Magical Focus: ${manaPoints} / 20 MP available for casting spells`}

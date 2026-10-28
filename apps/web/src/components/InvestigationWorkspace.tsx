@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import { InvestigationSession } from '../types/game'
+import { InvestigationSession, Clue } from '../types/game'
 import { LOCATIONS, CHARACTERS, CLUES, SPELLS } from '../services/caseData'
 import { CastleMap } from './CastleMap'
+import { ForensicClueModal } from './ForensicClueModal'
 
 interface InvestigationWorkspaceProps {
   session: InvestigationSession
@@ -9,6 +10,7 @@ interface InvestigationWorkspaceProps {
   onInspectClue: (clueId: string) => void
   onInterview: (characterId: string) => void
   onCastSpell: (spellId: string) => void
+  onAddDeduction?: (note: string) => void
 }
 
 export const InvestigationWorkspace: React.FC<InvestigationWorkspaceProps> = ({
@@ -16,9 +18,11 @@ export const InvestigationWorkspace: React.FC<InvestigationWorkspaceProps> = ({
   onMoveTo,
   onInspectClue,
   onInterview,
-  onCastSpell
+  onCastSpell,
+  onAddDeduction
 }) => {
   const [viewMode, setViewMode] = useState<'chamber' | 'map'>('chamber')
+  const [forensicClue, setForensicClue] = useState<Clue | null>(null)
   const currentLoc = LOCATIONS[session.currentLocationId]
 
   if (!currentLoc) {
@@ -339,14 +343,33 @@ export const InvestigationWorkspace: React.FC<InvestigationWorkspaceProps> = ({
                             </p>
                           </div>
 
-                          <div style={{ marginTop: '1rem', paddingTop: '0.75rem', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-                            <button
-                              onClick={() => onInspectClue(clue.id)}
-                              className={`btn ${isDiscovered ? 'btn-stealth' : 'btn-gold'}`}
-                              style={{ width: '100%', fontSize: '0.8rem', padding: '0.45rem' }}
-                            >
-                              {isDiscovered ? 'Re-Examine Details ➔' : 'Scrutinize Trace ➔'}
-                            </button>
+                          <div style={{ marginTop: '1rem', paddingTop: '0.75rem', borderTop: '1px solid rgba(255,255,255,0.06)', display: 'flex', flexDirection: 'column', gap: '0.45rem' }}>
+                            {isDiscovered ? (
+                              <>
+                                <button
+                                  onClick={() => setForensicClue(clue)}
+                                  className="btn btn-magic"
+                                  style={{ width: '100%', fontSize: '0.8rem', padding: '0.45rem', justifyContent: 'center' }}
+                                >
+                                  <span>🔬 Forensic Lens Exam</span>
+                                </button>
+                                <button
+                                  onClick={() => onInspectClue(clue.id)}
+                                  className="btn btn-stealth"
+                                  style={{ width: '100%', fontSize: '0.75rem', padding: '0.35rem', justifyContent: 'center' }}
+                                >
+                                  <span>Re-Inspect Narrative ➔</span>
+                                </button>
+                              </>
+                            ) : (
+                              <button
+                                onClick={() => onInspectClue(clue.id)}
+                                className="btn btn-gold"
+                                style={{ width: '100%', fontSize: '0.8rem', padding: '0.45rem', justifyContent: 'center' }}
+                              >
+                                <span>Scrutinize Trace ➔</span>
+                              </button>
+                            )}
                           </div>
                         </div>
                       )
@@ -358,6 +381,16 @@ export const InvestigationWorkspace: React.FC<InvestigationWorkspaceProps> = ({
           )}
         </main>
       </div>
+
+      {/* Forensic Examination Modal */}
+      {forensicClue && (
+        <ForensicClueModal
+          clue={forensicClue}
+          onClose={() => setForensicClue(null)}
+          onAddDeduction={onAddDeduction}
+        />
+      )}
     </div>
   )
 }
+

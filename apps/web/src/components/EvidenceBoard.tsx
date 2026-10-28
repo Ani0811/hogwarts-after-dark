@@ -1,16 +1,19 @@
 import React, { useState } from 'react'
-import { InvestigationSession } from '../types/game'
+import { InvestigationSession, Clue } from '../types/game'
 import { CLUES, LOCATIONS } from '../services/caseData'
+import { ForensicClueModal } from './ForensicClueModal'
 
 interface EvidenceBoardProps {
   session: InvestigationSession
   onSubmitHypothesis: (hypothesis: string, evidenceIds: string[]) => void
+  onAddDeduction?: (note: string) => void
 }
 
-export const EvidenceBoard: React.FC<EvidenceBoardProps> = ({ session, onSubmitHypothesis }) => {
+export const EvidenceBoard: React.FC<EvidenceBoardProps> = ({ session, onSubmitHypothesis, onAddDeduction }) => {
   const [selectedForHypothesis, setSelectedForHypothesis] = useState<string[]>([])
   const [hypothesisText, setHypothesisText] = useState('')
   const [filter, setFilter] = useState<'all' | 'discovered' | 'unfound'>('all')
+  const [forensicClue, setForensicClue] = useState<Clue | null>(null)
 
   const toggleSelect = (clueId: string) => {
     setSelectedForHypothesis(prev =>
@@ -255,7 +258,7 @@ export const EvidenceBoard: React.FC<EvidenceBoardProps> = ({ session, onSubmitH
                 </div>
 
                 {isDiscovered && (
-                  <div style={{ marginTop: '1.25rem', paddingTop: '0.85rem', borderTop: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div style={{ marginTop: '1.25rem', paddingTop: '0.85rem', borderTop: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
                     <div style={{ display: 'flex', gap: '0.3rem', flexWrap: 'wrap' }}>
                       {clue.tags.map(t => (
                         <span key={t} style={{ fontSize: '0.68rem', color: 'var(--text-muted)', background: 'rgba(255,255,255,0.05)', padding: '0.15rem 0.4rem', borderRadius: '3px' }}>
@@ -264,13 +267,22 @@ export const EvidenceBoard: React.FC<EvidenceBoardProps> = ({ session, onSubmitH
                       ))}
                     </div>
 
-                    <button
-                      onClick={() => toggleSelect(clue.id)}
-                      className={`btn ${isPinned ? 'btn-magic' : 'btn-stealth'}`}
-                      style={{ fontSize: '0.75rem', padding: '0.3rem 0.65rem' }}
-                    >
-                      {isPinned ? '✓ Pinned' : '📌 Pin to Theory'}
-                    </button>
+                    <div style={{ display: 'flex', gap: '0.4rem' }}>
+                      <button
+                        onClick={() => setForensicClue(clue)}
+                        className="btn btn-magic"
+                        style={{ fontSize: '0.75rem', padding: '0.3rem 0.65rem' }}
+                      >
+                        🔬 Lens
+                      </button>
+                      <button
+                        onClick={() => toggleSelect(clue.id)}
+                        className={`btn ${isPinned ? 'btn-magic' : 'btn-stealth'}`}
+                        style={{ fontSize: '0.75rem', padding: '0.3rem 0.65rem' }}
+                      >
+                        {isPinned ? '✓ Pinned' : '📌 Pin'}
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>
@@ -278,6 +290,15 @@ export const EvidenceBoard: React.FC<EvidenceBoardProps> = ({ session, onSubmitH
           })}
         </div>
       </div>
+
+      {/* Forensic Lens Inspection Modal */}
+      {forensicClue && (
+        <ForensicClueModal
+          clue={forensicClue}
+          onClose={() => setForensicClue(null)}
+          onAddDeduction={onAddDeduction}
+        />
+      )}
     </div>
   )
 }

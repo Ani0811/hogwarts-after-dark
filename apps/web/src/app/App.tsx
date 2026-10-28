@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { InvestigationSession, CompanionStatus, Character } from '../types/game'
 import { gameService } from '../services/api'
+import { soundscape } from '../services/soundscape'
 import { CHARACTERS } from '../services/caseData'
 import { Header } from '../components/Header'
 import { InvestigationWorkspace } from '../components/InvestigationWorkspace'
@@ -43,6 +44,7 @@ export const App: React.FC = () => {
 
   // Action handlers
   const handleMoveTo = async (locationId: string) => {
+    soundscape.playParchment()
     const res = await gameService.moveTo(session, locationId)
     setSession({ ...res.session })
     showNotification(res.message, res.success ? 'info' : 'warn')
@@ -51,16 +53,29 @@ export const App: React.FC = () => {
   const handleInspectClue = async (clueId: string) => {
     const res = await gameService.inspectClue(session, clueId)
     setSession({ ...res.session })
+    if (res.success) {
+      soundscape.playClueDiscovered()
+    }
     showNotification(res.message, res.success ? 'success' : 'warn')
   }
 
   const handleCastSpell = async (spellId: string) => {
+    // Play spell synthesis sound effect
+    if (spellId === 'spell_lumos') soundscape.playLumos()
+    else if (spellId === 'spell_revelio') soundscape.playRevelio()
+    else if (spellId === 'spell_specialis') soundscape.playSpecialisRevelio()
+    else if (spellId === 'spell_legilimens_trace') soundscape.playMemoriaVestigium()
+
     const res = await gameService.castSpell(session, spellId)
     setSession({ ...res.session })
+    if (res.success && res.message.toLowerCase().includes('reveal')) {
+      setTimeout(() => soundscape.playClueDiscovered(), 300)
+    }
     showNotification(res.message, res.success ? 'success' : 'warn')
   }
 
   const handleInterviewStart = (characterId: string) => {
+    soundscape.playParchment()
     const char = CHARACTERS[characterId]
     if (char) {
       setActiveDialogueCharacter(char)
@@ -77,14 +92,26 @@ export const App: React.FC = () => {
   }
 
   const handleSubmitHypothesis = async (hypothesis: string, evidenceIds: string[]) => {
+    soundscape.playClueDiscovered()
     const updated = await gameService.submitHypothesis(session, hypothesis, evidenceIds)
     setSession({ ...updated })
     showNotification('Investigative theory recorded in the Pensieve.', 'success')
   }
 
+  const handleAddDeduction = async (note: string) => {
+    const updated = await gameService.submitHypothesis(session, note, [])
+    setSession({ ...updated })
+    showNotification('Forensic observation preserved in Pensieve memory stream.', 'info')
+  }
+
   const handleSubmitVerdict = async (culpritId: string, evidenceIds: string[]) => {
     const res = await gameService.submitVerdict(session, culpritId, evidenceIds)
     setSession({ ...res.session })
+    if (res.correct) {
+      soundscape.playVerdictVictory()
+    } else {
+      soundscape.playVerdictFailure()
+    }
     showNotification(res.correct ? 'CASE SOLVED!' : 'Verdict rejected.', res.correct ? 'success' : 'warn')
     return { correct: res.correct, message: res.message }
   }
@@ -158,11 +185,16 @@ export const App: React.FC = () => {
             onInspectClue={handleInspectClue}
             onInterview={handleInterviewStart}
             onCastSpell={handleCastSpell}
+            onAddDeduction={handleAddDeduction}
           />
         )}
 
         {currentTab === 'evidence' && (
-          <EvidenceBoard session={session} onSubmitHypothesis={handleSubmitHypothesis} />
+          <EvidenceBoard
+            session={session}
+            onSubmitHypothesis={handleSubmitHypothesis}
+            onAddDeduction={handleAddDeduction}
+          />
         )}
 
         {currentTab === 'archive' && <RestrictedSection />}

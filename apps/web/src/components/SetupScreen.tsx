@@ -176,8 +176,8 @@ export const SetupScreen: React.FC<SetupScreenProps> = ({
               marginTop: '0.35rem',
               fontFamily: 'var(--font-mono)'
             }}>
-cd services/companion
-python -m uvicorn app.main:create_app --factory --port 8765
+              cd services/companion
+              python -m uvicorn app.main:create_app --factory --port 8765
             </pre>
           </div>
 
