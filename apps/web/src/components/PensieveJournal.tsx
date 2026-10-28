@@ -146,3 +146,4 @@ export const PensieveJournal: React.FC<PensieveJournalProps> = ({ session, onRes
     </div>
   )
 }
+

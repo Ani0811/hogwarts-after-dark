@@ -181,3 +181,4 @@ export const CastleMap: React.FC<CastleMapProps> = ({ session, onMoveTo }) => {
     </div>
   )
 }
+

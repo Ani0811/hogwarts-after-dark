@@ -120,3 +120,4 @@ npm run build
 
 Software is licensed under the [MIT License](LICENSE).
 Open-weight AI models run locally are subject to their respective creators' community licenses.
+

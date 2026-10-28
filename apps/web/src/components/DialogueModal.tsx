@@ -238,3 +238,4 @@ export const DialogueModal: React.FC<DialogueModalProps> = ({
     </div>
   )
 }
+

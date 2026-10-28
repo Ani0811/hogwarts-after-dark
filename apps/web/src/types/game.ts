@@ -108,3 +108,4 @@ export interface CompanionStatus {
   provider?: string
   error?: string | null
 }
+

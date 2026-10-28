@@ -67,3 +67,4 @@ podman compose up --build
 3. Paste the `PAIRING TOKEN` shown in your companion terminal.
 4. Click **Save & Test Connection**.
 5. The status pill will glow green: `Local AI: [Model Name] Ready`. You can now interrogate Maris, Corvin, and Faelind with live open-weight intelligence!
+

@@ -48,3 +48,4 @@ Lumos costs 1 MP, Revelio costs 2 MP, Specialis Revelio costs 3 MP, and Memoria 
 1. Open the browser Developer Tools (F12) > Application > Local Storage.
 2. Clear the key `had_investigation_session`.
 3. Refresh the page to initialize a clean investigation.
+

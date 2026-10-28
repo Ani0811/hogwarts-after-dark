@@ -58,3 +58,4 @@ This launches:
 - `had-web` at `http://127.0.0.1:8080`
 
 The container connects to the Windows host LM Studio instance via `host.containers.internal:1234`.
+

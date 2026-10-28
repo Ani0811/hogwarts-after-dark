@@ -67,3 +67,4 @@ jobs:
       - name: Production Static Build
         working-directory: apps/web
         run: npm run build
+

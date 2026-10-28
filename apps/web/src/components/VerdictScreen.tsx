@@ -180,3 +180,4 @@ export const VerdictScreen: React.FC<VerdictScreenProps> = ({ session, onSubmitV
     </div>
   )
 }
+
