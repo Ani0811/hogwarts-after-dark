@@ -148,15 +148,14 @@ export const App: React.FC = () => {
           background: notification.type === 'success'
             ? 'rgba(40, 90, 50, 0.95)'
             : notification.type === 'warn'
-            ? 'rgba(100, 50, 30, 0.95)'
-            : 'rgba(25, 30, 60, 0.95)',
-          border: `1px solid ${
-            notification.type === 'success'
+              ? 'rgba(100, 50, 30, 0.95)'
+              : 'rgba(25, 30, 60, 0.95)',
+          border: `1px solid ${notification.type === 'success'
               ? 'var(--color-success)'
               : notification.type === 'warn'
-              ? 'var(--color-warning)'
-              : 'var(--color-gold)'
-          }`,
+                ? 'var(--color-warning)'
+                : 'var(--color-gold)'
+            }`,
           boxShadow: '0 8px 24px rgba(0,0,0,0.6)',
           borderRadius: '8px',
           padding: '0.85rem 1.25rem',
