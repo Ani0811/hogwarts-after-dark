@@ -19,41 +19,107 @@ export const SetupScreen: React.FC<SetupScreenProps> = ({
     e.preventDefault()
     gameService.setCompanionUrl(urlInput)
     gameService.setPairingToken(tokenInput)
-    setSaveMessage('Settings saved! Testing connection...')
+    setSaveMessage('Credentials saved! Pinging companion service...')
     onRefreshCompanion()
-    setTimeout(() => setSaveMessage(''), 3000)
+    setTimeout(() => setSaveMessage(''), 3500)
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', maxWidth: '850px', margin: '0 auto' }}>
-      <div className="card" style={{ borderLeft: '4px solid var(--color-gold)' }}>
-        <h2 style={{ fontSize: '1.75rem', color: 'var(--color-gold-bright)', margin: 0 }}>
-          Local AI Companion & Setup Guide
-        </h2>
-        <p style={{ color: 'var(--color-text-secondary)', marginTop: '0.5rem', lineHeight: 1.6 }}>
-          Hogwarts After Dark is engineered with a strict <strong>zero-budget, privacy-first architecture</strong>.
-          There are <strong>no paid API keys</strong>, no central telemetry servers, and no cloud GPU dependencies.
-          Inference runs exclusively on your own computer via open-weight AI models.
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', maxWidth: '900px', margin: '0 auto' }}>
+      {/* Title & Vision Banner */}
+      <div className="arcane-panel arcane-panel--glass has-corners" style={{
+        padding: '1.75rem',
+        borderLeft: '4px solid var(--gold-pure)'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+          <span style={{ fontSize: '1.5rem' }}>⚡</span>
+          <h2 style={{ fontSize: '1.75rem', margin: 0 }}>
+            <span className="gold-gradient-text">Arcane AI Engine & Companion Setup</span>
+          </h2>
+        </div>
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginTop: '0.45rem', lineHeight: 1.6 }}>
+          Hogwarts After Dark is engineered with an uncompromising <strong>zero-budget, privacy-first local architecture</strong>.
+          There are <strong>no paid API keys</strong>, no cloud GPU subscriptions, and zero external telemetry.
+          Inference runs exclusively on your own machine through local open-weight language models.
         </p>
       </div>
 
-      {/* Connection Config Form */}
-      <div className="card" style={{ background: 'rgba(18, 18, 36, 0.95)' }}>
-        <h3 style={{ fontSize: '1.25rem', color: 'var(--color-gold)', marginBottom: '1rem' }}>
-          🔌 Companion Service Connection
+      {/* Diagnostics & Live Telemetry Panel */}
+      <div className="arcane-panel has-corners" style={{ padding: '1.5rem' }}>
+        <h3 style={{ fontSize: '1.15rem', color: 'var(--gold-bright)', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <span>📡</span> Live Runtime Telemetry
         </h3>
 
-        <form onSubmit={handleSave} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <div style={{
+          padding: '1.25rem',
+          borderRadius: '8px',
+          background: companionStatus.connected ? 'rgba(16, 185, 129, 0.08)' : 'rgba(245, 158, 11, 0.08)',
+          border: `1px solid ${companionStatus.connected ? 'rgba(16, 185, 129, 0.35)' : 'rgba(245, 158, 11, 0.35)'}`,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.65rem'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.5rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <span className={`status-dot ${companionStatus.connected ? 'status-dot--online' : 'status-dot--amber'}`} />
+              <strong style={{ color: companionStatus.connected ? '#6ee7b7' : '#fde68a', fontSize: '0.95rem' }}>
+                {companionStatus.connected ? 'LOCAL COMPANION CONNECTED' : 'STANDALONE DEMO MODE (OFFLINE)'}
+              </strong>
+            </div>
+
+            <button onClick={onRefreshCompanion} className="btn btn-stealth" style={{ fontSize: '0.75rem', padding: '0.25rem 0.65rem' }}>
+              🔄 Re-Check Health
+            </button>
+          </div>
+
+          <div style={{ fontSize: '0.85rem', color: 'var(--text-heading)', lineHeight: 1.6 }}>
+            {companionStatus.connected ? (
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.75rem', marginTop: '0.5rem' }}>
+                <div>
+                  <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>SERVICE ENDPOINT</div>
+                  <strong>{companionStatus.url}</strong>
+                </div>
+                <div>
+                  <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>ACTIVE MODEL</div>
+                  <strong style={{ color: 'var(--magic-cyan-bright)' }}>{companionStatus.aiModel || 'Detecting...'}</strong>
+                </div>
+                <div>
+                  <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>VERSION</div>
+                  <strong>v{companionStatus.version}</strong>
+                </div>
+              </div>
+            ) : (
+              <div>
+                The local companion service is not currently running at <code>{companionStatus.url}</code>.
+                <br />
+                The game is currently operating in <strong>Full In-Browser Demo Mode</strong>:
+                every chamber, environmental clue, spell effect, and verdict evaluation works deterministically in your browser!
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Pairing Credentials Form */}
+      <div className="arcane-panel has-corners" style={{ padding: '1.5rem' }}>
+        <h3 style={{ fontSize: '1.15rem', color: 'var(--gold-bright)', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <span>🔐</span> Companion Service Credentials
+        </h3>
+        <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginBottom: '1.25rem' }}>
+          Configure loopback URL and pairing token for authorized browser-to-companion communication.
+        </p>
+
+        <form onSubmit={handleSave} style={{ display: 'flex', flexDirection: 'column', gap: '1.15rem' }}>
           <div>
-            <label>Companion API URL (Loopback Interface Only):</label>
+            <label>Companion API Base URL (Loopback Only):</label>
             <input
               type="text"
               value={urlInput}
               onChange={e => setUrlInput(e.target.value)}
               placeholder="http://127.0.0.1:8765"
             />
-            <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginTop: '0.25rem' }}>
-              For security, the companion binds only to 127.0.0.1. It is never exposed over public networks.
+            <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '0.3rem' }}>
+              For security, the companion binds exclusively to 127.0.0.1. It is never exposed over public networks.
             </div>
           </div>
 
@@ -65,83 +131,50 @@ export const SetupScreen: React.FC<SetupScreenProps> = ({
               onChange={e => setTokenInput(e.target.value)}
               placeholder="Paste pairing token displayed in companion terminal..."
             />
-            <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginTop: '0.25rem' }}>
-              The companion displays a one-time random pairing token upon terminal launch to prevent unauthorized website cross-talk.
+            <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '0.3rem' }}>
+              Generated upon terminal launch to prevent unauthorized website cross-origin attacks.
             </div>
           </div>
 
-          <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
-            <button type="submit" className="btn btn-primary">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+            <button type="submit" className="btn btn-gold">
               💾 Save & Test Connection
             </button>
-            <button type="button" onClick={onRefreshCompanion} className="btn btn-secondary">
-              🔄 Check Health Now
-            </button>
             {saveMessage && (
-              <span style={{ fontSize: '0.85rem', color: 'var(--color-gold)' }}>
+              <span style={{ fontSize: '0.85rem', color: 'var(--gold-bright)' }}>
                 {saveMessage}
               </span>
             )}
           </div>
         </form>
-
-        {/* Live Diagnostics Card */}
-        <div style={{
-          marginTop: '1.25rem',
-          padding: '1rem',
-          borderRadius: '6px',
-          background: companionStatus.connected ? 'rgba(64,160,96,0.1)' : 'rgba(201,128,64,0.1)',
-          border: `1px solid ${companionStatus.connected ? 'var(--color-success)' : 'var(--color-warning)'}`
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 600 }}>
-            <span className={`status-dot ${companionStatus.connected ? 'status-dot--online' : 'status-dot--unknown'}`} />
-            <span>Connection Status: {companionStatus.connected ? 'COMPANION ACTIVE' : 'COMPANION OFFLINE (DEMO MODE)'}</span>
-          </div>
-          <div style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)', marginTop: '0.4rem', lineHeight: 1.5 }}>
-            {companionStatus.connected ? (
-              <>
-                Companion Version: <strong>{companionStatus.version}</strong> •
-                AI Status: <strong>{companionStatus.aiAvailable ? 'Model Ready' : 'Runtime Idle / No Model'}</strong>
-                {companionStatus.aiModel && ` • Model: ${companionStatus.aiModel}`}
-              </>
-            ) : (
-              <>
-                The companion service was not detected at <code>{companionStatus.url}</code>.
-                <br />
-                The game is currently running in <strong>Full In-Browser Demo Mode</strong>:
-                all gameplay, clues, spells, locations, and verdicts operate with 100% functionality using the deterministic engine!
-              </>
-            )}
-          </div>
-        </div>
       </div>
 
-      {/* Setup Instructions */}
-      <div className="card">
-        <h3 style={{ fontSize: '1.25rem', color: 'var(--color-gold)', marginBottom: '1rem' }}>
-          🚀 How to Run the Local AI Companion
+      {/* Step-by-Step Local AI Setup */}
+      <div className="arcane-panel has-corners" style={{ padding: '1.5rem' }}>
+        <h3 style={{ fontSize: '1.15rem', color: 'var(--gold-bright)', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <span>🚀</span> Step-by-Step Local AI Guide
         </h3>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', fontSize: '0.9rem', color: 'var(--color-text-primary)' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', fontSize: '0.88rem' }}>
           <div>
-            <strong>Step 1: Start LM Studio (or compatible runtime)</strong>
-            <p style={{ margin: '0.25rem 0 0 0', color: 'var(--color-text-secondary)' }}>
-              Download and launch <a href="https://lmstudio.ai" target="_blank" rel="noreferrer">LM Studio</a>. Load any instruction-tuned open-weight model (such as Llama 3.2 3B, Qwen 2.5 7B, or Mistral 7B). Start the local inference server on port <code>1234</code>.
+            <strong style={{ color: 'var(--text-heading)' }}>Step 1: Start LM Studio</strong>
+            <p style={{ color: 'var(--text-muted)', margin: '0.2rem 0 0 0' }}>
+              Download and launch <a href="https://lmstudio.ai" target="_blank" rel="noreferrer" style={{ color: 'var(--magic-cyan-bright)' }}>LM Studio</a>.
+              Load any instruction model (e.g. <code>Llama-3.2-3B-Instruct</code> or <code>Qwen2.5-7B</code>) and start the local server on port <code>1234</code>.
             </p>
           </div>
 
           <div>
-            <strong>Step 2: Start the Python Companion Service</strong>
-            <p style={{ margin: '0.25rem 0 0.5rem 0', color: 'var(--color-text-secondary)' }}>
-              Open your terminal inside the repository and start the companion:
-            </p>
+            <strong style={{ color: 'var(--text-heading)' }}>Step 2: Start the Local Companion Service</strong>
             <pre style={{
-              background: '#0a0a14',
-              padding: '0.75rem',
-              borderRadius: '4px',
-              border: '1px solid var(--color-border)',
-              color: 'var(--color-gold-bright)',
-              fontSize: '0.85rem'
+              background: '#06070e',
+              border: '1px solid var(--gold-border)',
+              borderRadius: '6px',
+              padding: '0.85rem',
+              color: 'var(--gold-bright)',
+              fontSize: '0.82rem',
+              marginTop: '0.35rem',
+              fontFamily: 'var(--font-mono)'
             }}>
 cd services/companion
 python -m uvicorn app.main:create_app --factory --port 8765
@@ -149,13 +182,9 @@ python -m uvicorn app.main:create_app --factory --port 8765
           </div>
 
           <div>
-            <strong>Step 3: Copy the Pairing Token</strong>
-            <p style={{ margin: '0.25rem 0 0 0', color: 'var(--color-text-secondary)' }}>
-              Upon startup, the companion terminal will output:
-              <br />
-              <code style={{ color: 'var(--color-gold)' }}>PAIRING TOKEN: [your-session-token]</code>
-              <br />
-              Paste this token into the pairing box above and click Save. That's all!
+            <strong style={{ color: 'var(--text-heading)' }}>Step 3: Copy the Session Pairing Token</strong>
+            <p style={{ color: 'var(--text-muted)', margin: '0.2rem 0 0 0' }}>
+              Copy the <code>PAIRING TOKEN</code> displayed in your terminal upon launch, paste it above, and click <strong>Save & Test Connection</strong>.
             </p>
           </div>
         </div>
@@ -163,4 +192,3 @@ python -m uvicorn app.main:create_app --factory --port 8765
     </div>
   )
 }
-

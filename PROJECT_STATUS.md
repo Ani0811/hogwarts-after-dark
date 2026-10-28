@@ -16,6 +16,7 @@
 | **Phase 5** | Security Audit & Regression Testing | ✅ Complete | 45 automated security, prompt injection, and playthrough tests passing |
 | **Phase 6** | Deployment & Production Containerization | ✅ Complete | Multi-stage Dockerfiles, Podman Compose, GitHub Pages CI/CD workflow |
 | **Phase 7** | Release Documentation & Zero-Budget Model | ✅ Complete | Full documentation suite, README, trouble-shooting, MIT license |
+| **Phase 8** | Arcane Noir HUD & Tactical Detective Workstation | ✅ Complete | Victorian Gothic aesthetic overhaul, 2-column workstation layout, parchment map, grimoire archive, illuminated inquest docket |
 
 ---
 

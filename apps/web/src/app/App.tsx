@@ -3,8 +3,7 @@ import { InvestigationSession, CompanionStatus, Character } from '../types/game'
 import { gameService } from '../services/api'
 import { CHARACTERS } from '../services/caseData'
 import { Header } from '../components/Header'
-import { CastleMap } from '../components/CastleMap'
-import { LocationView } from '../components/LocationView'
+import { InvestigationWorkspace } from '../components/InvestigationWorkspace'
 import { EvidenceBoard } from '../components/EvidenceBoard'
 import { RestrictedSection } from '../components/RestrictedSection'
 import { PensieveJournal } from '../components/PensieveJournal'
@@ -107,6 +106,7 @@ export const App: React.FC = () => {
         currentTab={currentTab}
         setTab={setCurrentTab}
         manaPoints={session.manaPoints}
+        discoveredCluesCount={session.discoveredClueIds.length}
         companionStatus={companionStatus}
         onRefreshCompanion={checkCompanion}
       />
@@ -150,18 +150,15 @@ export const App: React.FC = () => {
       )}
 
       {/* Main Content View */}
-      <main style={{ flex: 1, maxWidth: '1200px', width: '100%', margin: '0 auto', padding: '1.5rem' }}>
+      <main style={{ flex: 1, maxWidth: '1400px', width: '100%', margin: '0 auto', padding: '1.5rem' }}>
         {currentTab === 'map' && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-            <CastleMap session={session} onMoveTo={handleMoveTo} />
-            <LocationView
-              session={session}
-              onInspectClue={handleInspectClue}
-              onInterview={handleInterviewStart}
-              onCastSpell={handleCastSpell}
-              onMoveTo={handleMoveTo}
-            />
-          </div>
+          <InvestigationWorkspace
+            session={session}
+            onMoveTo={handleMoveTo}
+            onInspectClue={handleInspectClue}
+            onInterview={handleInterviewStart}
+            onCastSpell={handleCastSpell}
+          />
         )}
 
         {currentTab === 'evidence' && (

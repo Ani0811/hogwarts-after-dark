@@ -6,10 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Hogwarts After Dark — A magical investigation game powered by local AI" />
     <meta name="theme-color" content="#1a1a2e" />
-    <!-- Content Security Policy — tightened before production -->
+    <!-- Google Fonts: Cinzel for Arcane Titles, Cormorant Garamond for Lore, Plus Jakarta Sans for UI -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Content Security Policy with Google Fonts allowed -->
     <meta http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' http://127.0.0.1:8765; img-src 'self' data:; font-src 'self';" />
-    <title>Hogwarts After Dark</title>
+      content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; connect-src 'self' http://127.0.0.1:8765; img-src 'self' data:;" />
+    <title>Hogwarts After Dark — Magical Detective Investigation</title>
   </head>
   <body>
     <div id="root"></div>

@@ -23,7 +23,7 @@ export const DialogueModal: React.FC<DialogueModalProps> = ({
   const [messages, setMessages] = useState<Message[]>([
     {
       sender: 'suspect',
-      text: `${character.public_facts[0] || "I'm willing to answer your questions, Investigator."}`,
+      text: `${character.public_facts[0] || "I'm willing to answer your inquiries, Investigator."}`,
       isAi: false
     }
   ])
@@ -47,7 +47,7 @@ export const DialogueModal: React.FC<DialogueModalProps> = ({
     } catch {
       setMessages(prev => [
         ...prev,
-        { sender: 'suspect', text: '"I have nothing further to add to that question, Investigator."', isAi: false }
+        { sender: 'suspect', text: '"I have nothing further to disclose on that matter, Investigator."', isAi: false }
       ])
     } finally {
       setLoading(false)
@@ -64,148 +64,179 @@ export const DialogueModal: React.FC<DialogueModalProps> = ({
   return (
     <div style={{
       position: 'fixed',
-      top: 0,
-      left: 0,
-      width: '100vw',
-      height: '100vh',
-      background: 'rgba(5, 5, 15, 0.85)',
-      backdropFilter: 'blur(6px)',
+      inset: 0,
+      background: 'rgba(4, 5, 10, 0.88)',
+      backdropFilter: 'blur(10px)',
+      WebkitBackdropFilter: 'blur(10px)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      zIndex: 100,
-      padding: '1rem'
+      zIndex: 200,
+      padding: '1.5rem'
     }}>
-      <div className="card" style={{
+      <div className="arcane-panel has-corners" style={{
         width: '100%',
-        maxWidth: '700px',
-        maxHeight: '90vh',
+        maxWidth: '780px',
+        maxHeight: '92vh',
         display: 'flex',
         flexDirection: 'column',
-        padding: '1.5rem',
-        border: '1px solid var(--color-gold)',
-        boxShadow: '0 8px 32px rgba(0,0,0,0.8)'
+        padding: '1.75rem',
+        background: '#0c0e1a',
+        border: '1px solid var(--gold-pure)',
+        boxShadow: '0 12px 48px rgba(0,0,0,0.9), 0 0 24px rgba(212,175,55,0.2)'
       }}>
-        {/* Header */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '1px solid var(--color-border)', paddingBottom: '0.75rem' }}>
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <h3 style={{ margin: 0, color: 'var(--color-gold-bright)', fontSize: '1.35rem' }}>
-                {character.name}
-              </h3>
-              <span style={{
-                background: 'rgba(201,168,76,0.15)',
-                color: 'var(--color-gold)',
-                fontSize: '0.75rem',
-                padding: '0.15rem 0.5rem',
-                borderRadius: '3px'
-              }}>
-                {character.role}
-              </span>
+        {/* Header Bar */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '1px solid var(--gold-border)', paddingBottom: '1rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.9rem' }}>
+            <div style={{
+              width: '46px',
+              height: '46px',
+              borderRadius: '8px',
+              background: 'linear-gradient(135deg, rgba(244,63,94,0.2) 0%, rgba(10,11,20,0.9) 100%)',
+              border: '1px solid var(--status-ruby)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '1.5rem'
+            }}>
+              👤
             </div>
-            <p style={{ margin: '0.25rem 0 0 0', fontSize: '0.8rem', color: 'var(--color-text-secondary)' }}>
-              {character.portrait_description}
-            </p>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <h3 style={{ margin: 0, fontSize: '1.4rem' }}>
+                  <span className="gold-gradient-text">{character.name}</span>
+                </h3>
+                <span className="badge badge-ruby" style={{ fontSize: '0.65rem' }}>
+                  {character.role}
+                </span>
+              </div>
+              <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.82rem', color: 'var(--text-muted)' }}>
+                {character.portrait_description}
+              </p>
+            </div>
           </div>
-          <button onClick={onClose} className="btn btn-secondary" style={{ padding: '0.25rem 0.6rem', fontSize: '0.85rem' }}>
-            ✕ Close
+
+          <button onClick={onClose} className="btn btn-stealth" style={{ padding: '0.35rem 0.75rem', fontSize: '0.8rem' }}>
+            ✕ Conclude Interrogation
           </button>
         </div>
 
-        {/* AI status banner */}
+        {/* AI & Telemetry Banner */}
         <div style={{
-          marginTop: '0.5rem',
-          padding: '0.35rem 0.75rem',
-          borderRadius: '4px',
+          marginTop: '0.75rem',
+          padding: '0.45rem 0.85rem',
+          borderRadius: '6px',
           fontSize: '0.75rem',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          background: companionStatus.connected && companionStatus.aiAvailable ? 'rgba(64,160,96,0.1)' : 'rgba(201,168,76,0.08)',
-          border: '1px solid rgba(201,168,76,0.15)'
+          background: companionStatus.connected && companionStatus.aiAvailable ? 'rgba(16,185,129,0.12)' : 'rgba(212,175,55,0.08)',
+          border: '1px solid var(--gold-border)'
         }}>
-          <span>
+          <span style={{ fontWeight: 600, color: companionStatus.connected && companionStatus.aiAvailable ? '#6ee7b7' : 'var(--text-gold)' }}>
             {companionStatus.connected && companionStatus.aiAvailable
-              ? `⚡ AI Dialogue Active via LM Studio (${companionStatus.aiModel?.split('/').pop() || 'Local'})`
-              : `📖 In-Game Dialogue Engine Active (Offline/Demo Mode)`}
+              ? `⚡ Local AI Active: ${companionStatus.aiModel?.split('/').pop() || 'LM Studio'}`
+              : `📖 In-Game Narrative Engine Active (Zero AI Dependency / Demo Mode)`}
           </span>
-          <span style={{ color: 'var(--color-text-muted)' }}>
-            Knowledge bounded by case rules
+          <span style={{ color: 'var(--text-muted)' }}>
+            Character Knowledge Strictly Bounded
           </span>
         </div>
 
-        {/* Conversation transcript */}
+        {/* Transcript Area */}
         <div style={{
           flex: 1,
           overflowY: 'auto',
-          padding: '1rem 0',
+          padding: '1.25rem 0',
           display: 'flex',
           flexDirection: 'column',
-          gap: '0.75rem'
+          gap: '1rem'
         }}>
           {messages.map((m, idx) => (
             <div
               key={idx}
               style={{
                 alignSelf: m.sender === 'investigator' ? 'flex-end' : 'flex-start',
-                maxWidth: '82%',
+                maxWidth: '85%',
                 background: m.sender === 'investigator'
-                  ? 'rgba(74, 127, 203, 0.2)'
-                  : 'rgba(201, 168, 76, 0.12)',
-                border: `1px solid ${m.sender === 'investigator' ? 'rgba(74,127,203,0.4)' : 'rgba(201,168,76,0.3)'}`,
+                  ? 'linear-gradient(135deg, rgba(2, 132, 199, 0.25) 0%, rgba(10, 15, 30, 0.9) 100%)'
+                  : 'linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(16, 18, 30, 0.95) 100%)',
+                border: `1px solid ${m.sender === 'investigator' ? 'rgba(56,189,248,0.4)' : 'var(--gold-border)'}`,
                 borderRadius: '8px',
-                padding: '0.75rem 1rem'
+                padding: '0.85rem 1.15rem',
+                boxShadow: '0 4px 16px rgba(0,0,0,0.5)'
               }}
             >
               <div style={{
-                fontSize: '0.7rem',
+                fontSize: '0.72rem',
+                fontWeight: 700,
+                letterSpacing: '0.06em',
                 textTransform: 'uppercase',
-                letterSpacing: '0.05em',
-                color: m.sender === 'investigator' ? 'var(--color-magic-bright)' : 'var(--color-gold)',
-                marginBottom: '0.25rem',
+                color: m.sender === 'investigator' ? 'var(--magic-cyan-bright)' : 'var(--gold-bright)',
+                marginBottom: '0.35rem',
                 display: 'flex',
-                justifyContent: 'space-between'
+                justifyContent: 'space-between',
+                gap: '1rem'
               }}>
-                <span>{m.sender === 'investigator' ? 'You' : character.name}</span>
+                <span>{m.sender === 'investigator' ? 'Investigator (You)' : character.name}</span>
                 {m.sender === 'suspect' && (
-                  <span style={{ fontSize: '0.65rem', opacity: 0.8 }}>
+                  <span style={{ fontSize: '0.65rem', opacity: 0.85, fontWeight: 500 }}>
                     {m.isAi ? '⚡ Local AI' : '📜 Engine'}
                   </span>
                 )}
               </div>
-              <div style={{ fontSize: '0.92rem', color: 'var(--color-text-primary)', lineHeight: 1.5 }}>
+              <div className="font-lore" style={{ fontSize: '1.05rem', color: 'var(--text-heading)', lineHeight: 1.6 }}>
                 {m.text}
               </div>
             </div>
           ))}
 
           {loading && (
-            <div style={{ alignSelf: 'flex-start', padding: '0.5rem 1rem', fontStyle: 'italic', color: 'var(--color-text-secondary)', fontSize: '0.85rem' }}>
+            <div style={{
+              alignSelf: 'flex-start',
+              padding: '0.65rem 1rem',
+              fontStyle: 'italic',
+              color: 'var(--gold-glow)',
+              fontSize: '0.88rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem'
+            }}>
+              <span className="status-dot status-dot--amber" style={{ animation: 'pulseRune 1s infinite' }} />
               {character.name} is considering their response...
             </div>
           )}
         </div>
 
-        {/* Suggested quick inquiries */}
-        <div style={{ borderTop: '1px solid var(--color-border)', paddingTop: '0.75rem', marginBottom: '0.75rem' }}>
-          <div style={{ fontSize: '0.75rem', color: 'var(--color-text-secondary)', marginBottom: '0.4rem', textTransform: 'uppercase' }}>
-            Suggested Inquiries:
+        {/* Quick Inquiry Chips */}
+        <div style={{ borderTop: '1px solid var(--gold-border)', paddingTop: '0.85rem', marginBottom: '0.75rem' }}>
+          <div style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.06em', color: 'var(--text-muted)', marginBottom: '0.45rem', textTransform: 'uppercase' }}>
+            Investigative Questions:
           </div>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
             {suggestedQuestions.map((q, idx) => (
               <button
                 key={idx}
                 disabled={loading}
                 onClick={() => handleSend(q)}
                 style={{
-                  background: 'rgba(255,255,255,0.04)',
-                  border: '1px solid rgba(201,168,76,0.2)',
-                  color: 'var(--color-text-primary)',
-                  fontSize: '0.75rem',
-                  padding: '0.25rem 0.5rem',
-                  borderRadius: '3px',
+                  background: 'rgba(255, 255, 255, 0.04)',
+                  border: '1px solid rgba(212, 175, 55, 0.25)',
+                  color: 'var(--text-body)',
+                  fontSize: '0.76rem',
+                  padding: '0.3rem 0.6rem',
+                  borderRadius: '4px',
                   cursor: 'pointer',
-                  textAlign: 'left'
+                  textAlign: 'left',
+                  transition: 'all 0.15s ease'
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.borderColor = 'var(--gold-pure)'
+                  e.currentTarget.style.color = 'var(--gold-bright)'
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.borderColor = 'rgba(212, 175, 55, 0.25)'
+                  e.currentTarget.style.color = 'var(--text-body)'
                 }}
               >
                 "{q}"
@@ -214,28 +245,27 @@ export const DialogueModal: React.FC<DialogueModalProps> = ({
           </div>
         </div>
 
-        {/* Freeform input */}
+        {/* Freeform Prompt Bar */}
         <form
           onSubmit={e => {
             e.preventDefault()
             handleSend()
           }}
-          style={{ display: 'flex', gap: '0.5rem' }}
+          style={{ display: 'flex', gap: '0.65rem' }}
         >
           <input
             type="text"
             value={inputQuestion}
             onChange={e => setInputQuestion(e.target.value)}
-            placeholder={`Ask ${character.name} a specific question...`}
+            placeholder={`Pose a direct inquiry to ${character.name}...`}
             disabled={loading}
             style={{ flex: 1 }}
           />
-          <button type="submit" className="btn btn-primary" disabled={loading || !inputQuestion.trim()}>
-            {loading ? 'Consulting...' : 'Ask ➔'}
+          <button type="submit" className="btn btn-gold" disabled={loading || !inputQuestion.trim()}>
+            {loading ? 'Inquiring...' : 'Inquire ➔'}
           </button>
         </form>
       </div>
     </div>
   )
 }
-

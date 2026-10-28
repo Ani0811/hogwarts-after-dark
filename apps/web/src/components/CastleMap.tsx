@@ -10,166 +10,178 @@ interface CastleMapProps {
 export const CastleMap: React.FC<CastleMapProps> = ({ session, onMoveTo }) => {
   const currentLoc = LOCATIONS[session.currentLocationId]
 
-  // Spatial layout coordinates for visual positioning
-  const layout: Record<string, { x: number; y: number; label: string; icon: string }> = {
-    loc_entrance_hall: { x: 45, y: 55, label: 'Entrance Hall', icon: '🏰' },
-    loc_archivist_study: { x: 18, y: 50, label: "Archivist's Study", icon: '📖' },
-    loc_east_corridor: { x: 72, y: 50, label: 'East Corridor', icon: '🏛️' },
-    loc_herbarium: { x: 80, y: 80, label: 'The Herbarium', icon: '🌿' },
-    loc_bell_tower: { x: 80, y: 18, label: 'Bell Tower', icon: '🔔' },
+  const layout: Record<string, { x: number; y: number; label: string; icon: string; code: string }> = {
+    loc_entrance_hall: { x: 50, y: 55, label: 'Entrance Hall', icon: '🏰', code: 'MAIN FOYER' },
+    loc_archivist_study: { x: 18, y: 50, label: "Archivist's Study", icon: '📖', code: 'WEST STUDY' },
+    loc_east_corridor: { x: 74, y: 50, label: 'East Corridor', icon: '🏛️', code: 'EAST WING' },
+    loc_herbarium: { x: 82, y: 82, label: 'The Herbarium', icon: '🌿', code: 'GREENHOUSE' },
+    loc_bell_tower: { x: 82, y: 18, label: 'Bell Tower', icon: '🔔', code: 'NORTH TOWER' },
   }
 
   return (
-    <div className="card" style={{
-      background: 'radial-gradient(ellipse at center, #181832 0%, #0d0d1e 100%)',
-      border: '1px solid var(--color-border)',
-      padding: '1.5rem',
-      position: 'relative',
-      overflow: 'hidden'
-    }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+    <div className="arcane-panel has-corners" style={{ padding: '1.5rem', background: '#080912' }}>
+      {/* Map Header */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '0.75rem' }}>
         <div>
-          <h2 style={{ fontSize: '1.5rem', color: 'var(--color-gold)', margin: 0 }}>
-            Marauder's Map — Academy of Veiled Arts
-          </h2>
-          <p style={{ fontSize: '0.875rem', color: 'var(--color-text-secondary)', margin: '0.25rem 0 0 0' }}>
-            Click on any connected chamber to stealthily navigate the nocturnal corridors.
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <span style={{ fontSize: '1.3rem' }}>📜</span>
+            <h3 style={{ fontSize: '1.3rem', margin: 0 }}>
+              <span className="gold-gradient-text">The Marauder's Nocturnal Chart</span>
+            </h3>
+          </div>
+          <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', margin: '0.2rem 0 0 0' }}>
+            Live spatial representation of the Academy of Veiled Arts. Select any connected corridor to traverse.
           </p>
         </div>
-        <div style={{
-          background: 'rgba(201, 168, 76, 0.1)',
-          border: '1px solid var(--color-gold-dim)',
-          padding: '0.4rem 0.8rem',
-          borderRadius: '4px',
-          fontSize: '0.85rem',
-          color: 'var(--color-gold-bright)'
-        }}>
-          Currently in: <strong>{currentLoc?.name || 'Unknown'}</strong>
+
+        {/* Legend */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+            <span className="status-dot status-dot--online" />
+            <span>Investigator Position</span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+            <span style={{ color: 'var(--magic-cyan-bright)' }}>➔</span>
+            <span>Passable Route</span>
+          </div>
         </div>
       </div>
 
-      {/* SVG Map Canvas */}
+      {/* Parchment Chart Viewport */}
       <div style={{
         position: 'relative',
         width: '100%',
-        height: '420px',
-        backgroundColor: '#0a0a16',
-        backgroundImage: 'radial-gradient(circle, rgba(201,168,76,0.08) 1px, transparent 1px)',
-        backgroundSize: '24px 24px',
-        border: '1px solid rgba(201, 168, 76, 0.2)',
+        height: '460px',
+        background: 'radial-gradient(ellipse at center, #101226 0%, #06070e 100%)',
+        border: '1px solid var(--gold-border)',
         borderRadius: '8px',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        boxShadow: 'inset 0 0 40px rgba(0,0,0,0.8)'
       }}>
-        {/* Connection corridors */}
-        <svg style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
-          {/* Study <-> Hall */}
-          <line x1="22%" y1="52%" x2="48%" y2="57%" stroke="rgba(201, 168, 76, 0.35)" strokeWidth="3" strokeDasharray="6 4" />
-          {/* Hall <-> East Corridor */}
-          <line x1="48%" y1="57%" x2="72%" y2="52%" stroke="rgba(201, 168, 76, 0.35)" strokeWidth="3" strokeDasharray="6 4" />
+        {/* Architectural Grid & Runes */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          backgroundImage: 'radial-gradient(circle, rgba(212,175,55,0.12) 1px, transparent 1px)',
+          backgroundSize: '28px 28px',
+          opacity: 0.7,
+          pointerEvents: 'none'
+        }} />
+
+        {/* Corridor Connection SVG */}
+        <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
+          {/* Study <-> Entrance Hall */}
+          <line x1="22%" y1="50%" x2="48%" y2="55%" stroke="rgba(212,175,55,0.4)" strokeWidth="2.5" strokeDasharray="6 5" />
+          {/* Entrance Hall <-> East Corridor */}
+          <line x1="52%" y1="55%" x2="74%" y2="50%" stroke="rgba(212,175,55,0.4)" strokeWidth="2.5" strokeDasharray="6 5" />
           {/* East Corridor <-> Herbarium */}
-          <line x1="72%" y1="52%" x2="80%" y2="78%" stroke="rgba(201, 168, 76, 0.35)" strokeWidth="3" strokeDasharray="6 4" />
+          <line x1="74%" y1="50%" x2="82%" y2="80%" stroke="rgba(212,175,55,0.4)" strokeWidth="2.5" strokeDasharray="6 5" />
           {/* East Corridor <-> Bell Tower */}
-          <line x1="72%" y1="52%" x2="80%" y2="24%" stroke="rgba(201, 168, 76, 0.35)" strokeWidth="3" strokeDasharray="6 4" />
+          <line x1="74%" y1="50%" x2="82%" y2="20%" stroke="rgba(212,175,55,0.4)" strokeWidth="2.5" strokeDasharray="6 5" />
         </svg>
 
-        {/* Room Nodes */}
+        {/* Chamber Nodes */}
         {Object.entries(layout).map(([locId, pos]) => {
           const loc = LOCATIONS[locId]
           const isCurrent = session.currentLocationId === locId
           const isConnected = currentLoc?.connected_locations.includes(locId)
-
-          // Characters in this room
           const charactersHere = Object.values(CHARACTERS).filter(c => c.location_id === locId)
 
           return (
             <div
               key={locId}
               onClick={() => {
-                if (isConnected && !isCurrent) {
-                  onMoveTo(locId)
-                }
+                if (isConnected && !isCurrent) onMoveTo(locId)
               }}
               style={{
                 position: 'absolute',
                 left: `${pos.x}%`,
                 top: `${pos.y}%`,
                 transform: 'translate(-50%, -50%)',
-                width: '170px',
-                padding: '0.75rem',
+                width: '185px',
+                padding: '0.85rem',
                 borderRadius: '8px',
                 background: isCurrent
-                  ? 'linear-gradient(135deg, rgba(201,168,76,0.25) 0%, rgba(20,20,40,0.95) 100%)'
+                  ? 'linear-gradient(135deg, rgba(212,175,55,0.25) 0%, rgba(12,14,28,0.96) 100%)'
                   : isConnected
-                  ? 'rgba(25, 25, 50, 0.9)'
-                  : 'rgba(15, 15, 30, 0.7)',
+                  ? 'linear-gradient(135deg, rgba(20,24,48,0.92) 0%, rgba(10,11,22,0.92) 100%)'
+                  : 'rgba(10, 11, 20, 0.75)',
                 border: `2px solid ${
                   isCurrent
-                    ? 'var(--color-gold)'
+                    ? 'var(--gold-pure)'
                     : isConnected
-                    ? 'rgba(201, 168, 76, 0.5)'
+                    ? 'rgba(212, 175, 55, 0.55)'
                     : 'rgba(255, 255, 255, 0.1)'
                 }`,
-                boxShadow: isCurrent ? '0 0 16px rgba(201, 168, 76, 0.4)' : '0 4px 12px rgba(0,0,0,0.5)',
+                boxShadow: isCurrent
+                  ? '0 0 20px rgba(212, 175, 55, 0.4), inset 0 0 10px rgba(212, 175, 55, 0.15)'
+                  : isConnected
+                  ? '0 4px 16px rgba(0,0,0,0.6)'
+                  : 'none',
                 cursor: isConnected && !isCurrent ? 'pointer' : isCurrent ? 'default' : 'not-allowed',
-                transition: 'all 0.2s ease',
-                zIndex: isCurrent ? 10 : 5
+                transition: 'all 0.25s ease',
+                zIndex: isCurrent ? 20 : 10
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.25rem' }}>
-                <span style={{ fontSize: '1.25rem' }}>{pos.icon}</span>
-                <span style={{
-                  fontSize: '0.85rem',
-                  fontWeight: 600,
-                  color: isCurrent ? 'var(--color-gold-bright)' : 'var(--color-text-primary)'
-                }}>
-                  {loc?.name}
+              {/* Header inside node */}
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.35rem' }}>
+                <span style={{ fontSize: '1.2rem' }}>{pos.icon}</span>
+                <span style={{ fontSize: '0.62rem', letterSpacing: '0.08em', color: 'var(--text-muted)' }}>
+                  {pos.code}
                 </span>
               </div>
 
-              {/* Status / Footsteps indicator */}
-              {isCurrent && (
+              <div style={{
+                fontFamily: 'var(--font-arcane)',
+                fontSize: '0.88rem',
+                fontWeight: 700,
+                color: isCurrent ? 'var(--gold-bright)' : isConnected ? 'var(--text-heading)' : 'var(--text-muted)',
+                lineHeight: 1.2
+              }}>
+                {loc?.name}
+              </div>
+
+              {/* Player Footprint or Route CTA */}
+              {isCurrent ? (
                 <div style={{
-                  fontSize: '0.75rem',
-                  color: 'var(--color-gold)',
-                  display: 'flex',
+                  marginTop: '0.45rem',
+                  display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '0.25rem',
-                  marginTop: '0.25rem'
+                  gap: '0.3rem',
+                  color: 'var(--gold-bright)',
+                  fontSize: '0.72rem',
+                  fontWeight: 700
                 }}>
-                  <span>👣</span>
-                  <em>You are here</em>
+                  <span>👣</span> <em>Investigator Present</em>
                 </div>
-              )}
-
-              {/* Connected Travel Button */}
-              {isConnected && !isCurrent && (
+              ) : isConnected ? (
                 <div style={{
-                  fontSize: '0.75rem',
-                  color: 'var(--color-magic-bright)',
-                  marginTop: '0.25rem',
-                  fontWeight: 600
+                  marginTop: '0.45rem',
+                  color: 'var(--magic-cyan-bright)',
+                  fontSize: '0.72rem',
+                  fontWeight: 700
                 }}>
-                  ➔ Click to Enter
+                  ➔ Travel to Chamber
                 </div>
-              )}
+              ) : null}
 
-              {/* Suspect presence tags */}
+              {/* Characters Present in Room */}
               {charactersHere.length > 0 && (
-                <div style={{ marginTop: '0.4rem', display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
+                <div style={{ marginTop: '0.5rem', display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
                   {charactersHere.map(c => (
                     <span
                       key={c.id}
                       style={{
-                        background: 'rgba(74, 127, 203, 0.2)',
-                        border: '1px solid rgba(74, 127, 203, 0.4)',
-                        color: 'var(--color-magic-bright)',
-                        fontSize: '0.7rem',
-                        padding: '0.1rem 0.35rem',
+                        background: 'rgba(244, 63, 94, 0.15)',
+                        border: '1px solid rgba(244, 63, 94, 0.35)',
+                        color: '#fda4af',
+                        fontSize: '0.68rem',
+                        padding: '0.1rem 0.4rem',
                         borderRadius: '3px',
                         display: 'inline-block'
                       }}
                     >
-                      👤 {c.name.split(' ')[0]}
+                      👤 {c.name.split(' ')[0]} ({c.role.split(' ')[0]})
                     </span>
                   ))}
                 </div>
@@ -181,4 +193,3 @@ export const CastleMap: React.FC<CastleMapProps> = ({ session, onMoveTo }) => {
     </div>
   )
 }
-
